@@ -3,6 +3,9 @@ package com.udacity.pricing.domain.price;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -27,6 +30,10 @@ public class Price {
     @Column(unique=true)
     @JsonProperty("vehicle_id")
     private Long vehicleId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     public Price() {
     }
@@ -59,5 +66,24 @@ public class Price {
 
     public void setVehicleId(Long vehicleId) {
         this.vehicleId = vehicleId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Added explicit get method for price id to expose the id to the API.
+     * Without this addition the id is not included.
+     * We don't expose the set method protect the id from mutation.
+     * @return
+     */
+    @JsonProperty("price_id")
+    public Long getPriceId() {
+        return id;
     }
 }
