@@ -110,9 +110,9 @@ class CarController {
                           @ApiParam(value="Car object to save. (Only detail and location fields will be updated.)", required=true)
                           @Valid @RequestBody Car car) {
         /**
-         * TODO: Set the id of the input car object to the `id` input.
-         * TODO: Save the car using the `save` method from the Car service
-         * TODO: Use the `assembler` on that updated car and return as part of the response.
+         * DONE: Set the id of the input car object to the `id` input.
+         * DONE: Save the car using the `save` method from the Car service
+         * DONE: Use the `assembler` on that updated car and return as part of the response.
          *   Update the first line as part of the above implementing.
          */
         car.setId(id);
@@ -128,10 +128,14 @@ class CarController {
      * @return response that the related vehicle is no longer in the system
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<?> delete(@PathVariable Long id) {
+    @ApiOperation(value = "Delete a car by id in the current inventory.",
+            notes = "The id is generated with the vehicle during POST request.")
+    ResponseEntity<?> delete(@ApiParam(value="id of the vehicle to delete", required=true) @PathVariable Long id) {
         /**
-         * TODO: Use the Car Service to delete the requested vehicle.
+         * DONE: Use the Car Service to delete the requested vehicle.
          */
+        carService.delete(id);
+
         return ResponseEntity.noContent().build();
     }
 }
