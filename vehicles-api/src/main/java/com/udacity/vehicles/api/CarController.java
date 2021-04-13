@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +45,11 @@ class CarController {
      * Creates a list to store any vehicles.
      * @return list of vehicles
      */
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "List all cars in the inventory",
+            notes = "All cars currently in the system will be listed.  " +
+                    "Price and location information are generated randomly." +
+                    "These cars do not represent anything in the real world.")
     Resources<Resource<Car>> list() {
         List<Resource<Car>> resources = carService.list().stream().map(assembler::toResource)
                 .collect(Collectors.toList());
