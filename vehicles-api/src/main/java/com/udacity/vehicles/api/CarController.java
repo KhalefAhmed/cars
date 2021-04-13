@@ -103,15 +103,22 @@ class CarController {
      * @param car The updated information about the related vehicle.
      * @return response that the vehicle was updated in the system
      */
-    @PutMapping("/{id}")
-    ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
+    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Update a car by id in the current inventory.",
+            notes = "The id is generated with the vehicle during POST request.  Only vehicle details and location are mutible.")
+    ResponseEntity<?> put(@ApiParam(value="id of the vehicle to update", required=true) @PathVariable Long id,
+                          @ApiParam(value="Car object to save. (Only detail and location fields will be updated.)", required=true)
+                          @Valid @RequestBody Car car) {
         /**
          * TODO: Set the id of the input car object to the `id` input.
          * TODO: Save the car using the `save` method from the Car service
          * TODO: Use the `assembler` on that updated car and return as part of the response.
          *   Update the first line as part of the above implementing.
          */
-        Resource<Car> resource = assembler.toResource(new Car());
+        car.setId(id);
+        Car saved = carService.save(car);
+
+        Resource<Car> resource = assembler.toResource(saved);
         return ResponseEntity.ok(resource);
     }
 
