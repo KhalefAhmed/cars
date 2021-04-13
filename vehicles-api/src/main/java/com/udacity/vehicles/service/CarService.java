@@ -46,11 +46,12 @@ public class CarService {
      */
     public Car findById(Long id) {
         /**
-         * TODO: Find the car by ID from the `repository` if it exists.
+         * DONE: Find the car by ID from the `repository` if it exists.
          *   If it does not exist, throw a CarNotFoundException
          *   Remove the below code as part of your implementation.
          */
-        Car car = new Car();
+
+        Car car = repository.findById(id).orElseThrow(CarNotFoundException::new);
 
         /**
          * TODO: Use the Pricing Web client you create in `VehiclesApiApplication`
