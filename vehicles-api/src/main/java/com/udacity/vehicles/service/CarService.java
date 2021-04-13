@@ -82,8 +82,9 @@ public class CarService {
      * Either creates or updates a vehicle, based on prior existence of car
      * @param car A car object, which can be either new or existing
      * @return the new/updated car is stored in the repository
+     * @throws CarNotFoundException if the car id is provided by does not exist in the data store
      */
-    public Car save(Car car) {
+    public Car save(Car car) throws CarNotFoundException{
         if (car.getId() != null) {
             return repository.findById(car.getId())
                     .map(carToBeUpdated -> {
@@ -102,15 +103,16 @@ public class CarService {
      */
     public void delete(Long id) {
         /**
-         * TODO: Find the car by ID from the `repository` if it exists.
+         * DONE: Find the car by ID from the `repository` if it exists.
          *   If it does not exist, throw a CarNotFoundException
          */
 
+        Car car = repository.findById(id).orElseThrow(CarNotFoundException::new);
 
         /**
-         * TODO: Delete the car from the repository.
+         * DONE: Delete the car from the repository.
          */
-
+        repository.deleteById(car.getId());
 
     }
 }
