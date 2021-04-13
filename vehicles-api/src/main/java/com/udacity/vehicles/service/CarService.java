@@ -1,5 +1,7 @@
 package com.udacity.vehicles.service;
 
+import com.udacity.vehicles.client.maps.MapsClient;
+import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
@@ -15,11 +17,17 @@ public class CarService {
 
     private final CarRepository repository;
 
-    public CarService(CarRepository repository) {
+    private PriceClient pricingClient;
+
+    private MapsClient mapsClient;
+
+    public CarService(CarRepository repository, PriceClient pricingClient, MapsClient mapsClient ) {
         /**
-         * TODO: Add the Maps and Pricing Web Clients you create
+         * DONE: Add the Maps and Pricing Web Clients you create
          *   in `VehiclesApiApplication` as arguments and set them here.
          */
+        this.mapsClient = mapsClient;
+        this.pricingClient = pricingClient;
         this.repository = repository;
     }
 
