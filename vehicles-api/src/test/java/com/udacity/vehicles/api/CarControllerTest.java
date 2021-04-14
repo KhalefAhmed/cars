@@ -23,7 +23,6 @@ import java.net.URI;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -76,7 +75,6 @@ public class CarControllerTest {
      * @throws Exception when car creation fails in the system
      */
     @Test
-    @DisplayName("Create a car (via POST)")
     public void createCar() throws Exception {
         Car car = getCar();
         mvc.perform(
@@ -92,8 +90,6 @@ public class CarControllerTest {
      * @throws Exception if the read operation of the vehicle list fails
      */
     @Test
-    @DisplayName("Display all cars in the inventory (via GET)")
-
     public void listCars() throws Exception {
         /**
          * DONE: Add a test to check that the `get` method works by calling
@@ -112,7 +108,6 @@ public class CarControllerTest {
      * @throws Exception if the read operation for a single car fails
      */
     @Test
-    @DisplayName("Find a car by ID (via GET)")
     public void findCar() throws Exception {
         /**
          * DONE: Add a test to check that the `get` method works by calling
@@ -136,7 +131,6 @@ public class CarControllerTest {
      * @throws Exception if the delete operation of a vehicle fails
      */
     @Test
-    @DisplayName("Delete a car (via DELETE)")
     public void deleteCar() throws Exception {
         /**
          * DONE: Add a test to check whether a vehicle is appropriately deleted
