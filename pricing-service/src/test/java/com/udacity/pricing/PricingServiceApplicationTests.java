@@ -49,8 +49,27 @@ public class PricingServiceApplicationTests {
         double price = 12000.00;
         int vehicleId = 301;
 
+    MockHttpServletRequestBuilder post = post("/prices")
+            .accept(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content("{\"currency\":\"" + currency +
+                    "\", \"price\":\"" + price +
+                    "\", \"vehicle_id\":\"" + vehicleId +
+                    "\"}");
 
+    String content = mockMvc.perform(post)
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
 
+    JSONObject obj = new JSONObject(content);
+    Assertions.assertAll("Create Price",
+            () -> Assertions.assertNotNull(obj.get("price_id")),
+            () -> Assertions.assertEquals(currency, obj.get("currency")),
+            () -> Assertions.assertEquals(price, obj.get("price")),
+            () -> Assertions.assertEquals(vehicleId, obj.get("vehicle_id"))
+    );
     }
 
 }
