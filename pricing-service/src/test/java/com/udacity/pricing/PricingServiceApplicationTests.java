@@ -153,6 +153,40 @@ public class PricingServiceApplicationTests {
 
     }
 
+    @Test
+    @DisplayName("Find a price using Vehicle ID")
+    public void testFindPrice() throws Exception{
+
+        int vehicleIdStart = 20;
+        int vehicleIdToFind = 25;
+        int vehicleIdEnd = 30;
+
+        for (int i = vehicleIdStart; i < vehicleIdEnd; i++) {
+            int price = ThreadLocalRandom.current().nextInt(15000, 100000);
+            mockMvc.perform(post("/prices/")
+                    .accept(MediaType.APPLICATION_JSON_UTF8)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .content("{\"currency\":\"USD\", \"price\":\"" + price + "\", \"vehicle_id\":\"" + i + "\"}" ))
+                    .andExpect(status().isCreated());
+        }
+
+        MockHttpServletRequestBuilder query = get("/prices/search/findByVehicleId?vehicle_id="
+                + vehicleIdToFind);
+
+        String content = mockMvc.perform(query)
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        JSONObject obj = new JSONObject(content);
+        int returnedVehicleId = (int) obj.get("vehicle_id");
+
+        Assertions.assertEquals(vehicleIdToFind, returnedVehicleId);
+
+
+    }
+
 
 
 
