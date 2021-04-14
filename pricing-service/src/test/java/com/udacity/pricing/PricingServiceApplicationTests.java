@@ -122,8 +122,38 @@ public class PricingServiceApplicationTests {
     public void testUpdatePrice(String parameter,
                                 String newValue, String price, String currency, String vehicleId) throws Exception {
 
+        MockHttpServletRequestBuilder createPost = post("/prices")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"currency\":\"" + currency + "\", \"price\":\"" + price +"\", \"vehicle_id\":\"" + vehicleId + "\"}");
+
+
+        MvcResult createResult = mockMvc.perform(createPost)
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String content = createResult.getResponse().getContentAsString();
+
+        JSONObject obj = new JSONObject(content);
+        int priceId = (int) obj.get("price_id");
+
+        MockHttpServletRequestBuilder updatePost = patch("/prices/" + priceId)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"" + parameter + "\":\"" + newValue + "\"}");
+
+        content = mockMvc.perform(updatePost)
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        obj = new JSONObject(content);
+        Assertions.assertEquals(newValue, obj.get(parameter).toString());
+
     }
-    }
+
+
 
 
 
