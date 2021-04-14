@@ -6,3 +6,8 @@ Content-Type: application/json
   "price": 12000.00,
   "vehicle_id": 305
 }
+
+###
+GET http://localhost:8082//prices/search/findByVehicleId?vehicle_id=305
+
+
