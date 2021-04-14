@@ -22,9 +22,7 @@ public class SwaggerConfig {
     private String apiDescription = "A vehicle listing service of cars that may or may not exist with bogus prices, in places you'll never find.";
     private String apiVersion = "0.1";
     private Contact apiContact = new springfox.documentation.service.Contact("Ahmed KHALEF", "https://github.com/KhalefAhmed", "khalef.ahmedkhalil@gmail.com");
-    private String apiLicense = "The MIT License";
-    private String getApiLicenseUri = "/mit-license.html";
-    private String apiTermsOfServiceUri = "/tos.html";
+
 
     @Bean
     public Docket api(@Qualifier("vehicleServerUrl") String url) {
@@ -39,15 +37,13 @@ public class SwaggerConfig {
 
     private ApiInfo getApiInfo(String url) {
 
-        ApiInfo info =  new ApiInfo(
+        ApiInfo info = new ApiInfo(
                 apiTitle,
                 apiDescription,
                 apiVersion,
-                url + apiTermsOfServiceUri,
+                "https://www.univ-orleans.fr/fr",
                 apiContact,
-                apiLicense,
-                url + getApiLicenseUri,
-                Collections.emptyList());
+                "License of Cars API", "https://www.univ-orleans.fr/fr", Collections.emptyList());
         return info;
     }
 

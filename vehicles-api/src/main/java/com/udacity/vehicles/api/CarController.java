@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.hateoas.Resource;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/cars")
+@Api(value="Vehicle Inventory API")
 class CarController {
 
     private final CarService carService;
