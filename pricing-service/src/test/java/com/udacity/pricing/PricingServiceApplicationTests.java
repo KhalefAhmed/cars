@@ -187,7 +187,21 @@ public class PricingServiceApplicationTests {
 
     }
 
+    @Test
+    @DisplayName("Validate sending a null request.")
+    public void testNullRequestValidation() throws Exception {
 
+        MockHttpServletRequestBuilder post = post("/prices")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{}");
+
+        mockMvc.perform(post)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors.[0].code").value("currency.code.required"))
+                .andExpect(jsonPath("errors.[1].code").value("price.required"))
+                .andExpect(jsonPath("errors.[2].code").value("vehicle_id.required"));
+    }
 
 
 
