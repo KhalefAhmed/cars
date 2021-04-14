@@ -1,10 +1,7 @@
 package com.udacity.vehicles.eureka;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
