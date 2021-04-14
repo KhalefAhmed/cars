@@ -204,5 +204,44 @@ public class PricingServiceApplicationTests {
     }
 
 
+    @Test
+    @DisplayName("Validate saving an existing vehicle id.")
+    public void testExistingVehicleValidation() throws Exception {
+        String currency = "EUR";  // bad currency code
+        double price = 34000.00;
+        int vehicleId = 305;
+
+
+        MockHttpServletRequestBuilder post = post("/prices")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"currency\":\"" + currency +
+                        "\", \"price\":\"" + price +
+                        "\", \"vehicle_id\":\"" + vehicleId +
+                        "\"}");
+
+
+        mockMvc.perform(post)
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors.[0].code").value("vehicle_id.not.unique"));
+    }
+
+    @Test
+    @DisplayName("Validate invalid vehicle id.")
+    public void testInvalidVehicleId() throws Exception {
+
+        int vehicleId = 900;
+
+        MockHttpServletRequestBuilder get = get("/prices/" + vehicleId)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
+        // Try to find the price
+        mockMvc.perform(get)
+                .andExpect(status().isNotFound());
+    }
+
 
 }
