@@ -102,4 +102,29 @@ public class PricingServiceApplicationTests {
 
     }
 
+    static class UpdatePriceArgumentsProvider implements ArgumentsProvider {
+
+        public UpdatePriceArgumentsProvider() {}
+
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(
+                    Arguments.of("currency", "EUR", "10000.00", "USD", "300"),
+                    Arguments.of("vehicle_id", "310", "10000.00", "USD", "301"),
+                    Arguments.of("price", "22222.22", "10000.00", "USD", "302")
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(UpdatePriceArgumentsProvider.class)
+    @DisplayName("Update a price (via PATCH).")
+    public void testUpdatePrice(String parameter,
+                                String newValue, String price, String currency, String vehicleId) throws Exception {
+
+    }
+    }
+
+
+
 }
