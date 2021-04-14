@@ -1,0 +1,8 @@
+POST http://localhost:8082/prices
+Content-Type: application/json
+
+{
+  "currency": "USD",
+  "price": 12000.00,
+  "vehicle_id": 305
+}
