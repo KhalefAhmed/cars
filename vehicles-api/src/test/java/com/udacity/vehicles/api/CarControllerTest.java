@@ -23,6 +23,7 @@ import java.net.URI;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -75,6 +76,7 @@ public class CarControllerTest {
      * @throws Exception when car creation fails in the system
      */
     @Test
+    @DisplayName("Create a car (via POST)")
     public void createCar() throws Exception {
         Car car = getCar();
         mvc.perform(
@@ -90,13 +92,19 @@ public class CarControllerTest {
      * @throws Exception if the read operation of the vehicle list fails
      */
     @Test
+    @DisplayName("Display all cars in the inventory (via GET)")
+
     public void listCars() throws Exception {
         /**
-         * TODO: Add a test to check that the `get` method works by calling
+         * DONE: Add a test to check that the `get` method works by calling
          *   the whole list of vehicles. This should utilize the car from `getCar()`
          *   below (the vehicle will be the first in the list).
          */
-
+        mvc.perform(
+                get(new URI("/cars"))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
     }
 
     /**
@@ -106,9 +114,10 @@ public class CarControllerTest {
     @Test
     public void findCar() throws Exception {
         /**
-         * TODO: Add a test to check that the `get` method works by calling
+         * DONE: Add a test to check that the `get` method works by calling
          *   a vehicle by ID. This should utilize the car from `getCar()` below.
          */
+
     }
 
     /**
