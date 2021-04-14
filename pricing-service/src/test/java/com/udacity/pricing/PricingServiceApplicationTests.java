@@ -63,13 +63,43 @@ public class PricingServiceApplicationTests {
             .getResponse()
             .getContentAsString();
 
+
     JSONObject obj = new JSONObject(content);
+
     Assertions.assertAll("Create Price",
             () -> Assertions.assertNotNull(obj.get("price_id")),
             () -> Assertions.assertEquals(currency, obj.get("currency")),
             () -> Assertions.assertEquals(price, obj.get("price")),
             () -> Assertions.assertEquals(vehicleId, obj.get("vehicle_id"))
     );
+
+    }
+
+    @Test
+    @DisplayName("Delete a price.")
+    public void testDeletePrice() throws Exception {
+
+        MockHttpServletRequestBuilder createPost = post("/prices")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"currency\":\"USD\", \"price\":\"12000\", \"vehicle_id\":\"300\"}");
+
+        MvcResult createResult = mockMvc.perform(createPost)
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String content = createResult.getResponse().getContentAsString();
+
+        JSONObject obj = new JSONObject(content);
+
+        int priceId = (int) obj.get("price_id");
+
+        mockMvc.perform(delete("/prices/" + priceId))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/prices/" + priceId))
+                .andExpect(status().isNotFound());
+
     }
 
 }
