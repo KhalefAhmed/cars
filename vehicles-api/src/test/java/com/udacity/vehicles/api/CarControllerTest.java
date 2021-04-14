@@ -112,11 +112,22 @@ public class CarControllerTest {
      * @throws Exception if the read operation for a single car fails
      */
     @Test
+    @DisplayName("Find a car by ID (via GET)")
     public void findCar() throws Exception {
         /**
          * DONE: Add a test to check that the `get` method works by calling
          *   a vehicle by ID. This should utilize the car from `getCar()` below.
          */
+        mvc.perform(
+                get(new URI("/cars/1"))
+                .content(json.write(getCar()).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("_links.self.href").isNotEmpty())
+                .andExpect(jsonPath("_links.self.href").value("http://localhost/cars/1"));
+
+
 
     }
 
