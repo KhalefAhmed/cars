@@ -144,7 +144,7 @@ public class CarControllerTest {
     }
 
     @Test
-    public void () throws Exception {
+    public void updateCar() throws Exception {
         Car car = getCar();
         mvc.perform(
                 put(new URI("/cars/1"))
